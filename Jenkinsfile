@@ -2,28 +2,17 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone Repository') {
-            steps {
-                git branch: 'main', url: 'https://github.com/SureshThedatanerd/Devops_practice.git'
+        stage('Deploy HTML') {
+            when {
+                changeset "index.html"
             }
-        }
-
-        stage('Build Docker Image') {
             steps {
-                script {
-                    dockerImage = docker.build('simple-html-app')
-                }
-            }
-        }
-
-        stage('Run Container') {
-            steps {
-                script {
-                    // Stop previous container if running
-                    sh 'docker stop html-app || true && docker rm html-app || true'
-                    // Run new container
-                    sh 'docker run -d --name html-app -p 80:80 simple-html-app'
-                }
+                echo "index.html changed – running deployment..."
+                // your docker build & run steps go here
+                // e.g.:
+                // sh 'docker build -t simple-html-app .'
+                // sh 'docker stop html-app || true && docker rm html-app || true'
+                // sh 'docker run -d --name html-app -p 80:80 simple-html-app'
             }
         }
     }
