@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Deploy HTML') {
             when {
-                changeset "index.html"
+                changeset "main/index.html"
             }
             steps {
                 echo "index.html changed – running deployment..."
